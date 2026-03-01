@@ -106,7 +106,14 @@ export default function ListingPage() {
             </select>
           </div>
           {loading ? (
-            <p className="text-stone-500">Carregando...</p>
+            <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="h-72 rounded-2xl bg-stone-100 border border-stone-200/70 animate-pulse"
+                />
+              ))}
+            </div>
           ) : (
             <>
               <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">

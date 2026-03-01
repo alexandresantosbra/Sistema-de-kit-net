@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
+import { useToast } from '../contexts/ToastContext'
 
 export default function RegisterPage() {
   const { register } = useAuth()
@@ -10,20 +11,26 @@ export default function RegisterPage() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const { showSuccess, showError } = useToast()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
     if (password.length < 6) {
-      setError('A senha deve ter pelo menos 6 caracteres')
+      const msg = 'A senha deve ter pelo menos 6 caracteres'
+      setError(msg)
+      showError(msg)
       return
     }
     setLoading(true)
     try {
       await register(email, password, name)
+      showSuccess('Cadastro realizado com sucesso.')
       navigate('/kitnets')
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro ao cadastrar')
+      const msg = err instanceof Error ? err.message : 'Erro ao cadastrar'
+      setError(msg)
+      showError(msg)
     } finally {
       setLoading(false)
     }
@@ -78,9 +85,12 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 disabled:opacity-50 transition-colors"
+            className="w-full py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
           >
-            {loading ? 'Cadastrando...' : 'Cadastrar'}
+            {loading && (
+              <span className="h-4 w-4 rounded-full border-2 border-white/40 border-t-white animate-spin" />
+            )}
+            <span>{loading ? 'Cadastrando...' : 'Cadastrar'}</span>
           </button>
         </form>
         <p className="mt-6 text-center text-stone-600 text-sm">

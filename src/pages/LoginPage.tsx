@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
+import { useToast } from '../contexts/ToastContext'
 
 export default function LoginPage() {
   const { login } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
+  const { showSuccess, showError } = useToast()
   const from = (location.state as { from?: { pathname: string } })?.from?.pathname || '/kitnets'
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -18,9 +20,12 @@ export default function LoginPage() {
     setLoading(true)
     try {
       await login(email, password)
+      showSuccess('Login realizado com sucesso.')
       navigate(from, { replace: true })
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro ao entrar')
+      const msg = err instanceof Error ? err.message : 'Erro ao entrar'
+      setError(msg)
+      showError(msg)
     } finally {
       setLoading(false)
     }
@@ -62,9 +67,12 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 disabled:opacity-50 transition-colors"
+            className="w-full py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
           >
-            {loading ? 'Entrando...' : 'Entrar'}
+            {loading && (
+              <span className="h-4 w-4 rounded-full border-2 border-white/40 border-t-white animate-spin" />
+            )}
+            <span>{loading ? 'Entrando...' : 'Entrar'}</span>
           </button>
         </form>
         <p className="mt-6 text-center text-stone-600 text-sm">

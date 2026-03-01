@@ -26,8 +26,18 @@ export default function FavoritosPage() {
 
   if (loading) {
     return (
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <p className="text-stone-500">Carregando...</p>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h1 className="font-display text-2xl font-semibold text-stone-900 mb-8">
+          Minhas Favoritas
+        </h1>
+        <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div
+              key={i}
+              className="h-72 rounded-2xl bg-stone-100 border border-stone-200/70 animate-pulse"
+            />
+          ))}
+        </div>
       </div>
     )
   }

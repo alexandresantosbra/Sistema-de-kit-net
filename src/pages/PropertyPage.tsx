@@ -1,15 +1,18 @@
 import { useState, useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import { api } from '../lib/api'
 import CostCalculator from '../components/CostCalculator'
 import VisitScheduler from '../components/VisitScheduler'
 import ChatWidget from '../components/ChatWidget'
 import PropertyMap from '../components/PropertyMap'
 import FloorPlan from '../components/FloorPlan'
+import { useAuth } from '../contexts/AuthContext'
 import type { Kitnet } from '../types'
 
 export default function PropertyPage() {
   const { id } = useParams()
+  const navigate = useNavigate()
+  const { user } = useAuth()
   const [kitnet, setKitnet] = useState<Kitnet | null>(null)
   const [loading, setLoading] = useState(true)
 
@@ -27,6 +30,18 @@ export default function PropertyPage() {
 
   const [mainImage, setMainImage] = useState(0)
   const [activeTab, setActiveTab] = useState<'photos' | 'video' | 'floorplan'>('photos')
+
+  const handlePrimaryScheduleClick = () => {
+    if (!kitnet) return
+    if (!user) {
+      navigate('/entrar', { state: { from: { pathname: `/kitnet/${kitnet.id}` } } })
+      return
+    }
+    const el = document.getElementById('agendar')
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }
 
   if (loading) {
     return (
@@ -184,12 +199,13 @@ export default function PropertyPage() {
               Escolha data e horário pelo celular, sem precisar ligar
             </p>
           </div>
-          <a
-            href="#agendar"
+          <button
+            type="button"
+            onClick={handlePrimaryScheduleClick}
             className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary-600 text-white font-semibold rounded-2xl hover:bg-primary-700 transition-colors shadow-lg shadow-primary-600/20"
           >
             📅 Agendar Visita
-          </a>
+          </button>
         </div>
       </div>
 
@@ -288,7 +304,36 @@ export default function PropertyPage() {
         {/* Sidebar */}
         <div className="space-y-6">
           <div id="agendar">
-            <VisitScheduler kitnetId={kitnet.id} />
+            {user ? (
+              <VisitScheduler kitnetId={kitnet.id} />
+            ) : (
+              <div className="bg-white rounded-2xl border border-stone-200/80 p-6 text-center">
+                <h3 className="font-display font-semibold text-stone-900 mb-2">
+                  Faça login para agendar
+                </h3>
+                <p className="text-sm text-stone-600 mb-4">
+                  Crie uma conta ou entre para escolher dia e horário da visita.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      navigate('/entrar', { state: { from: { pathname: `/kitnet/${kitnet.id}` } } })
+                    }
+                    className="px-6 py-2.5 bg-primary-600 text-white text-sm font-semibold rounded-xl hover:bg-primary-700 transition-colors"
+                  >
+                    Entrar
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => navigate('/cadastro')}
+                    className="px-6 py-2.5 border border-stone-300 text-sm font-semibold rounded-xl text-stone-700 hover:bg-stone-50 transition-colors"
+                  >
+                    Cadastrar
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
           <CostCalculator kitnet={kitnet} />
           <div className="p-4 bg-stone-50 rounded-2xl text-center">

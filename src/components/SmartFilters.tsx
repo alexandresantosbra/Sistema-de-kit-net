@@ -155,7 +155,7 @@ export default function SmartFilters() {
           </div>
           <div>
             <label className="block text-sm font-medium text-stone-700 mb-2">
-              Máx. distância do metrô (m)
+              Máx. distância da parada de ônibus (m)
             </label>
             <input
               type="number"

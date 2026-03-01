@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
+import { useToast } from '../contexts/ToastContext'
 
 interface LayoutProps {
   children: ReactNode
@@ -8,6 +9,14 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const { user, logout, loading } = useAuth()
+  const navigate = useNavigate()
+  const { showInfo } = useToast()
+
+  const handleLogout = () => {
+    logout()
+    showInfo('Você saiu da sua conta.')
+    navigate('/')
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -32,7 +41,7 @@ export default function Layout({ children }: LayoutProps) {
                     </Link>
                     <span className="text-stone-500 text-sm">{user.name}</span>
                     <button
-                      onClick={logout}
+                      onClick={handleLogout}
                       className="text-stone-500 hover:text-stone-700 text-sm"
                     >
                       Sair

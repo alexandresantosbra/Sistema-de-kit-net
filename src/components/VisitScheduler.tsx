@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useToast } from '../contexts/ToastContext'
 
 interface VisitSchedulerProps {
   kitnetId: string
@@ -16,11 +17,19 @@ export default function VisitScheduler({ kitnetId }: VisitSchedulerProps) {
   const [selectedDay, setSelectedDay] = useState<Date | null>(null)
   const [selectedHour, setSelectedHour] = useState<string | null>(null)
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const { showSuccess } = useToast()
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!selectedDay || !selectedHour) return
-    setSubmitted(true)
+    setSubmitting(true)
+    // Simula uma chamada à API para dar sensação de carregamento
+    setTimeout(() => {
+      setSubmitting(false)
+      setSubmitted(true)
+      showSuccess('Visita agendada com sucesso.')
+    }, 800)
   }
 
   const formatDay = (d: Date) =>
@@ -97,10 +106,13 @@ export default function VisitScheduler({ kitnetId }: VisitSchedulerProps) {
 
         <button
           type="submit"
-          disabled={!selectedDay || !selectedHour}
-          className="w-full py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          disabled={!selectedDay || !selectedHour || submitting}
+          className="w-full py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
         >
-          Confirmar Visita
+          {submitting && (
+            <span className="h-4 w-4 rounded-full border-2 border-white/40 border-t-white animate-spin" />
+          )}
+          <span>{submitting ? 'Agendando...' : 'Confirmar Visita'}</span>
         </button>
       </form>
     </div>
