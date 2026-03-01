@@ -1,0 +1,17 @@
+{
+  "users": [
+    {
+      "id": "91f9be4d-913a-45fe-8a88-4dbc552830c5",
+      "email": "verseries924@gmail.com",
+      "password": "$2a$10$9hngf815UeWz6r8CZXP8NuN85NZuPYc/PvWfQNM5TnoAh1mc0aX5e",
+      "name": "alexandre",
+      "createdAt": "2026-02-22T20:17:35.930Z"
+    }
+  ],
+  "favorites": [
+    {
+      "userId": "91f9be4d-913a-45fe-8a88-4dbc552830c5",
+      "kitnetIds": []
+    }
+  ]
+}

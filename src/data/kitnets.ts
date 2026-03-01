@@ -1,0 +1,117 @@
+import type { Kitnet } from '../types';
+
+export const kitnets: Kitnet[] = [
+  {
+    id: '1',
+    title: 'Kitnet Mobiliada com Internet Inclusa - Vila Madalena',
+    address: 'Rua Harmonia, 250',
+    neighborhood: 'Vila Madalena',
+    city: 'São Paulo',
+    state: 'SP',
+    price: 1200,
+    condominium: 280,
+    iptu: 80,
+    utilitiesIncluded: { water: true, electricity: true, gas: true, internet: true },
+    furnished: true,
+    petFriendly: true,
+    area: 25,
+    bedrooms: 1,
+    bathrooms: 1,
+    latitude: -23.5505,
+    longitude: -46.6333,
+    images: [
+      'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800',
+      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800',
+      'https://images.unsplash.com/photo-1560185127-6a1896bffaa2?w=800',
+    ],
+    videoTour: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    description: 'Kitnet charmosa e bem localizada, próxima ao metrô. Inclui água, luz, gás e internet de 100MB. Ambiente acolhedor com cama queen, guarda-roupas, mesa de trabalho e microondas.',
+    nearby: {
+      universities: [
+        { name: 'USP', distance: '4 km' },
+        { name: 'PUC', distance: '2 km' },
+      ],
+      subway: [
+        { line: 'Linha 2 - Verde', distance: '800 m' },
+      ],
+      commerce: [
+        { name: 'Padaria Doce Sabor', distance: '100 m' },
+        { name: 'Lavanderia Express', distance: '300 m' },
+        { name: 'Farmácia Drogasil', distance: '150 m' },
+      ],
+    },
+  },
+  {
+    id: '2',
+    title: 'Kitnet Vazia - Tudo Incluso - Pinheiros',
+    address: 'Rua dos Pinheiros, 890',
+    neighborhood: 'Pinheiros',
+    city: 'São Paulo',
+    state: 'SP',
+    price: 950,
+    condominium: 320,
+    iptu: 65,
+    utilitiesIncluded: { water: true, electricity: true, gas: true, internet: true },
+    furnished: false,
+    petFriendly: false,
+    area: 22,
+    bedrooms: 1,
+    bathrooms: 1,
+    latitude: -23.5644,
+    longitude: -46.6931,
+    images: [
+      'https://images.unsplash.com/photo-1493809842364-78817add7ff3?w=800',
+      'https://images.unsplash.com/photo-1556020685-2b9d77094150?w=800',
+    ],
+    description: 'Kitnet vazia ideal para quem já tem móveis. Todas as contas inclusas no valor! Água, luz, gás e internet. Próxima ao metrô Faria Lima.',
+    nearby: {
+      universities: [
+        { name: 'ESPM', distance: '1.5 km' },
+      ],
+      subway: [
+        { line: 'Linha 4 - Amarela', distance: '500 m' },
+      ],
+      commerce: [
+        { name: 'Supermercado Pão de Açúcar', distance: '200 m' },
+        { name: 'Farmácia', distance: '100 m' },
+      ],
+    },
+  },
+  {
+    id: '3',
+    title: 'Studio Pet Friendly - Contas Separadas - Butantã',
+    address: 'Av. Corifeu de Azevedo Marques, 1200',
+    neighborhood: 'Butantã',
+    city: 'São Paulo',
+    state: 'SP',
+    price: 1100,
+    condominium: 200,
+    iptu: 90,
+    utilitiesIncluded: { water: false, electricity: false, gas: true, internet: false },
+    furnished: true,
+    petFriendly: true,
+    area: 28,
+    bedrooms: 1,
+    bathrooms: 1,
+    avgUtilities: 180,
+    latitude: -23.5720,
+    longitude: -46.7072,
+    images: [
+      'https://images.unsplash.com/photo-1536376072261-38c75010e6c9?w=800',
+      'https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800',
+    ],
+    description: 'Aceita pets! Studio mobiliado perto da USP. Gás incluso. Água e luz por consumo. Internet pode ser contratada separadamente.',
+    nearby: {
+      universities: [
+        { name: 'USP', distance: '1.2 km' },
+      ],
+      subway: [
+        { line: 'Linha 4 - Amarela', distance: '1 km' },
+      ],
+      commerce: [
+        { name: 'Padaria', distance: '200 m' },
+        { name: 'Academia', distance: '400 m' },
+      ],
+    },
+  },
+];

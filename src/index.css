@@ -1,0 +1,15 @@
+@import 'leaflet/dist/leaflet.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply antialiased text-stone-800 bg-stone-50;
+  }
+}
+
+.leaflet-container {
+  font-family: inherit;
+}
